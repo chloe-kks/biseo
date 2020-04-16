@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      ol, ul {
+        list-style: none;
+      }
+      .content{
+        display: flex;
+      }
+      .aside{
+        width: 10%;
+      }
+      .display{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 90%;
+        
+      }
+      ul.chatting{
+        padding: 0;
+        border: 2px solid black;
+        width: 70%;
+      }
+      li.mine{
+        text-align: right;
+      }
+      li.enter{
+        text-align: center;
+      }
+    </style>
+</head>
+<body>
+    <h1>Chatting room</h1>
+    <h2 id="username"></h2>
+    <div class="content">
+      <div class="aside">
+        <ul class="members">
+        </ul>
+      </div>
+      <div class="display">
+        <ul class="chatting"></ul>
+        <input type="text" id="message">
+        <button id="send">Send</button>
+      </div>
+    </div>
+    
+    
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let prev_time = [0,0,0,0,0,0,0]
+
+      const check= function(d){
+        let time = [d.getYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(),d.getMilliseconds()]
+        for(let i = 0; i < 6 ; i++){
+          if(time[i]>prev_time[i]){
+            prev_time = time
+            return true
+          }
+        }
+        if(time[6]>prev_time[6]+200){
+          prev_time = time
+          return true
+        }
+        console.log("blocked")
+        return false
+      }
+      
+      const socket = io();
+
+      const send_click = function(){
+        let d = new Date();
+        if(check(d)){
+          const message = document.getElementById("message").value
+          socket.emit('chat message',message)
+          const li = document.createElement('li')
+          li.className = "mine"
+          li.innerText = "Me: " + message
+          document.getElementById("message").value = ""
+          document.getElementsByClassName("chatting")[0].appendChild(li)
+        }
+      }
+
+      const send_enter = function(event) {
+        if (event.keyCode === 13) {
+          let d = new Date();
+          if(check(d)){
+            event.preventDefault();
+            const message = document.getElementById("message").value
+            socket.emit('chat message',message)
+            const li = document.createElement('li')
+            li.className = "mine"
+            li.innerText = "Me: " + message
+            document.getElementById("message").value = ""
+            document.getElementsByClassName("chatting")[0].appendChild(li)
+          }
+        }
+      };
+
+      document.getElementById("message").addEventListener("keyup", send_enter)
+      document.getElementById("send").addEventListener("click", send_click)
+      
+      
+      
+
+      socket.on('members',function(accessor){
+        console.log(accessor)
+        // document.getElementsByClassName("members")[0].removeChild()
+        if(document.getElementsByClassName("members")[0].childElementCount != 0){
+          console.log("일단")
+          document.getElementsByClassName("members")[0].innerHTML = ""
+        }
+        for (let i=0 ; i<accessor.length; i++){
+          console.log("count")
+          const li = document.createElement('li')
+          li.innerText = accessor[i]
+          document.getElementsByClassName("members")[0].appendChild(li)
+        }
+      })
+
+      socket.on('chat message',function(user, message){
+        const li = document.createElement('li')
+        li.innerText = user + ": " + message
+        document.getElementsByClassName("chatting")[0].appendChild(li)
+      })
+      
+      socket.on('enter',function(username){
+        const li = document.createElement('li')
+        li.className = "enter"
+        li.innerText = username + " is entered"
+        console.log("user add")
+        document.getElementsByClassName("chatting")[0].appendChild(li)
+      })
+
+      socket.on('out',function(username){
+        const li = document.createElement('li')
+        li.className = "enter"
+        li.innerText = username + " left the room"
+        console.log("user left")
+        document.getElementsByClassName("chatting")[0].appendChild(li)
+      })
+
+      socket.on('name',function(name){
+        document.getElementById("username").innerText = "Your name is " + name
+      })
+    </script>
+</body>
+</html>
