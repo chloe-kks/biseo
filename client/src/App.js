@@ -5,52 +5,58 @@ import './App.css';
 import socketio from 'socket.io-client';
 const socket = socketio.connect('http://localhost:8081');
 
-class Form extends React.Component {
+class VoteForm extends React.Component {
 	constructor (props) {
 		super(props)
-		this.state = { name: 'Moss', message: '' , votename: 'Biseo'}
+		this.state = { voteName: '', voteContent: '' }
 	}
 
-	messageChanged (e) {
-		this.setState({message: e.target.value})
+	voteNameChanged (e) {
+		this.setState({voteName: e.target.value})
 	}
 
-	send() {
-		socket.emit('chat message', {
-			name: this.state.name,
-			message: this.state.message
+	voteContentChanged (e) {
+		this.setState({voteContent: e.target.value})
+	}
+
+	vote_send() {
+		socket.emit('vote', {
+			voteName: this.state.voteName,
+			voteContent: this.state.voteContent,
 		})
-		this.setState({message: ''})
+		this.setState({voteName: '', voteContent: ''})
 	}
-
-    vote_send() {
-        socket.emit('vote', {
-			votename: this.state.votename
-        })
-        this.setState({votename: ''})
-    }
 
   render () {
     return (
-      <div style={{display: 'flex', flexDirection: 'column', width: '50%'}}>
-        메시지:<br />
-        <input value={this.state.message}
-          onChange={e => this.messageChanged(e)} /><br />
-        <button onClick={e => this.send()}>전송</button>
+      <div className="chat">
+      	<div className="chat-box">
+			투표 이름 : 
+			<input value={this.state.voteName} onChange={e => this.voteNameChanged(e)} />
+		</div>  
+		<div className="chat-box">
+			투표 내용 :
+			<input value={this.state.voteContent} onChange={e => this.voteContentChanged(e)} />
+		</div>
+        <button onClick={e => this.vote_send()}>투표시작</button>
       </div>
     )
   }
-
 }
+
 
 class App extends React.Component {
   constructor(props) {
 	super(props)
-	this.state = { logs: [] }
+	this.state = { logs: [], agree: 0, disagree: 0, abs: 0, vote_flag: false }
   }
 
+	vote(e) {
+		this.setState({vote_flag: true})
+	}
+
   componentDidMount() {
-	socket.on('chat message', (obj) => {
+	socket.on('vote', (obj) => {
 		const logs2 = this.state.logs
 		obj.key = 'key_' + (this.state.logs.length+1)
 		console.log(obj)
@@ -60,42 +66,40 @@ class App extends React.Component {
   }
 
   render() {
-  const messages = this.state.logs.map(e => (
-	<div style={{display: 'flex', flexDirection: 'column'}} key={e.key} >
-		<span >{e.name} : </span>
-		<span >{e.message}</span>
-		<p style={{clear: 'both'}} />
-	</div>
-	))
-  const vote = this.state.logs.map(e => (
-	<div style={{display: 'flex', flexDirection: 'column'}} key={e.key} >
-		<span>{e.votename} <br/></span>
-		<span>찬성</span>
-		<span>반대</span>
-		<p style={{clear: 'both'}} />
-	</div>
+  	const vote = this.state.logs.map(e => (
+		<div className="vote-box" key={e.key} >
+			<div className="vote-border">
+				<div className="vote-header"> 
+					vote name : {e.voteName} <br/>
+					vote Content : {e.voteContent} 
+				</div>
+				{
+					this.state.vote_flag ? 
+					null
+					:
+					<div className="vote-selector">
+						<button onClick={e => this.vote(e)} className="vote-select-button">찬성 </button>
+						<button onClick={e => this.vote(e)} className="vote-select-button">반대 </button>
+						<button onClick={e => this.vote(e)} className="vote-select-button">기권 </button>
+					</div>
+				}
+			</div>
+		</div>
 	))
   return (
-	<div className="App">
-	<header className="App-header">
-		<div style={{display: 'flex', flexDirection: 'row'}}>
-		<div style={{display: 'flex', flexDirection: 'column', margin:20}}>
-			<h1>Chatting room</h1>
-    		<div>
-      			<div>
-        			{messages}
-      			</div>
-      			<div>
-					<Form />
-      			</div>
-			</div>
-		</div>
-		<div style={{display: 'flex', flexDirection: 'column', margin:20}}>
-			<h1>Vote room</h1>
-			<div>
+	<div>
+	<header>
+		<div className="full-view">
+			<div className="vote-room">
+				<h1>Vote room</h1>
 				{vote}
 			</div>
-		</div>
+			<div className="chat-room">
+				<h1>Make a Vote</h1>
+	    		<div>
+					<VoteForm />
+				</div>
+			</div>
 		</div>
 	</header>
     </div> 

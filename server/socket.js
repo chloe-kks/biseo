@@ -30,6 +30,12 @@ module.exports = (io) => {
 			socket.emit('chat message', message);
         })
 
+        socket.on('name message', function(name){
+            console.log("name changed: ");
+            console.log(name);
+            //socket.emit('name message', name);
+        })
+
 		socket.on('vote', function(votename){
 			console.log("vote create: ");
 			console.log(votename);

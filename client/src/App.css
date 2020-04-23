@@ -36,3 +36,89 @@
     transform: rotate(360deg);
   }
 }
+
+.full-view {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-room {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: calc(10px + 1vmin);
+}
+
+.vote-room {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: calc(10px + 1vmin);
+}
+
+.chat {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: left;
+  color: black;
+}
+
+.chat-box {
+  margin: 10px;
+}
+
+.vote-box {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 90%;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.vote-border {
+  width: 100%;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid white;
+}
+
+.vote-header {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+  padding: 10px;
+  justify-content: left;
+  font-size: calc(10px + 1.5vmin);
+  font-weight: 700;
+}
+
+.vote-selector {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.vote-select-button {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
