@@ -1,0 +1,157 @@
+.left {
+		width: 40%;
+		padding: 20px;
+        float: left;
+    }
+.right {
+		width: 40%;
+		padding: 20px;
+        float: left;
+    }
+
+
+.Vote-Background {
+	width: 520px;
+	height: 357px;
+	left: 170px;
+	top: calc(50% - 357px/2 - 95.5px);
+
+	background: #FFFFFF;
+	border: 0.5px solid #F2A024;
+	box-sizing: border-box;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 0px 0px 4px 4px;
+
+}
+
+#agree-btn {
+	width: 150px;
+	height: 34px;
+	left: 170px;
+	top: 92px;
+
+	background: #FFFFFF;
+	border: 0.5px solid #F2A024;
+	box-sizing: border-box;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 5px 5px 0px 0px;
+
+	font-family: NanumGothic;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 17px;
+	line-height: 17px;
+	text-align: center;
+
+	color: #F2A024;
+}
+
+#president-btn {
+	width: 150px;
+	height: 34px;
+	left: 322px;
+	top: 92px;
+
+	background: #F2A024;
+	border: 0.5px solid #F2A024;
+	box-sizing: border-box;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 5px 5px 0px 0px;
+
+	font-family: NanumGothic;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 17px;
+	line-height: 17px;
+	text-align: center;
+
+	color: #FFFFFF;
+}
+
+#newtem-btn {
+	width: 150px;
+	height: 34px;
+	left: 474px;
+	top: 92px;
+
+	background: #F2A024;
+	border: 0.5px solid #EBA12A;
+	box-sizing: border-box;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 5px 5px 0px 0px;
+
+	font-family: NanumGothic;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 17px;
+	line-height: 17px;
+	text-align: center;
+
+	color: #FFFFFF;
+}
+
+
+#title {
+	width: 415px;
+	height: 20px;
+	left: 205px;
+	top: calc(50% - 20px/2 - 231px);
+
+	font-family: NanumGothic;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 17px;
+	line-height: 17px;
+    
+    background: transparent;
+	border: none;
+
+	color: #6A6A6A;
+}
+
+#content {
+	width: 461px;
+	height: 12px;
+	left: 205px;
+	top: 204px;
+
+	font-family: NanumGothic;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 10px;
+	line-height: 10px;
+
+	background: transparent;
+    border: none;
+    
+	color: #6A6A6A;
+}
+
+#subtext {
+	width: 424px;
+	height: 14px;
+	left: 205px;
+	top: 350px;
+
+	font-family: NanumGothic;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 12px;
+	
+	background: transparent;
+	border: none;
+
+	color: #6A6A6A;
+}  
+
+#submit {
+	width: 65px;
+	height: 23px;
+	left: 583px;
+	top: 422px;
+
+	background: #F2A024;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+	border-radius: 14px;
+	}
