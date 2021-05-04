@@ -1,4 +1,4 @@
-# Biseo
+# biseo
 SPARCS real-time vote, chat service
 
 ### Server side
