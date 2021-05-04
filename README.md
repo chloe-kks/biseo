@@ -1,5 +1,5 @@
 # Biseo
-SPARCS 실시간 채팅, 투표 시스템
+SPARCS real-time vote, chat service
 
 ### Server side
 ```
